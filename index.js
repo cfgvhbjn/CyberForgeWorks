@@ -1,1 +1,1 @@
-console.log("hello world");
+const isPalindrome = (str) => str === str.split("").reverse().join("");
