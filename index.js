@@ -1,18 +1,19 @@
-const binarySearchRecursive = (
-  arr,
-  target,
-  left = 0,
-  right = arr.length - 1,
-) => {
-  if (left > right) {
-    return -1;
+function deserialize(data) {
+  if (!data.length) return null;
+  const root = new TreeNode(data.shift());
+  const queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    const leftVal = data.shift();
+    if (leftVal !== undefined) {
+      node.left = new TreeNode(leftVal);
+      queue.push(node.left);
+    }
+    const rightVal = data.shift();
+    if (rightVal !== undefined) {
+      node.right = new TreeNode(rightVal);
+      queue.push(node.right);
+    }
   }
-  const mid = Math.floor((left + right) / 2);
-  if (arr[mid] === target) {
-    return mid;
-  } else if (arr[mid] < target) {
-    return binarySearchRecursive(arr, target, mid + 1, right);
-  } else {
-    return binarySearchRecursive(arr, target, left, mid - 1);
-  }
-};
+  return root;
+}
