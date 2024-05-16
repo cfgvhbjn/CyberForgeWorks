@@ -1,19 +1,20 @@
-function deserialize(data) {
-  if (!data.length) return null;
-  const root = new TreeNode(data.shift());
-  const queue = [root];
-  while (queue.length) {
-    const node = queue.shift();
-    const leftVal = data.shift();
-    if (leftVal !== undefined) {
-      node.left = new TreeNode(leftVal);
-      queue.push(node.left);
-    }
-    const rightVal = data.shift();
-    if (rightVal !== undefined) {
-      node.right = new TreeNode(rightVal);
-      queue.push(node.right);
+function detectCycle(head) {
+  let slow = head;
+  let fast = head;
+  let hasCycle = false;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      hasCycle = true;
+      break;
     }
   }
-  return root;
+  if (!hasCycle) return null;
+  slow = head;
+  while (slow !== fast) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return slow;
 }
